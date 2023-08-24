@@ -1,0 +1,16 @@
+.banner{
+    display: block; /*reason: don't want other show in the same line */
+    padding: 5px;
+    margin: 0 ;
+    width: 100vw;
+    height: 75vh;
+    position: relative; 
+}
+
+.bannerText{
+    position: relative;
+    top: 100px;
+    z-index: 20;
+    text-align: center;
+    color: white;
+}
