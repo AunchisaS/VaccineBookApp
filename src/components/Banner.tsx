@@ -11,8 +11,8 @@ export default function Banner () {
             objectFit ='cover'
             />
             <div className={styles.bannerText}>
-                <h1>Time To Vaccinate</h1>
-                <h3>- Quick and Painless Protection -</h3>
+                <h1 className="text-4xl font-semibold mb-3">Time To Vaccinate</h1>
+                <h3 className="text-lg">Quick and Painless Protection</h3>
             </div>
         </div>
     );
