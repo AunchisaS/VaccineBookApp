@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
+import InteractiveCard from './InteractiveCard';
 export default function ProductCard({ hospName, hospLoc, hospTel, hospLink, imgSrc }: { hospName: string, hospLoc: string, hospTel: string, hospLink: string, imgSrc: string }) {
     return (
-        <div className="w-1/4 h-[360px] rounded-lg shadow-lg overflow-hidden">
+        <InteractiveCard>
             <div className="w-full h-[60%] relative rounded-t-lg">
                 <Image
                     src={imgSrc}
@@ -20,6 +20,6 @@ export default function ProductCard({ hospName, hospLoc, hospTel, hospLink, imgS
                     <Link href={hospLink} className="text-blue-600 hover:underline">รายละเอียดเพิ่มเติม</Link>
                 </div>
             </div>
-        </div>
+        </InteractiveCard>
     );
 }
