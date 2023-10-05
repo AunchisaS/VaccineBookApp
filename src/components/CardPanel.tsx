@@ -1,7 +1,20 @@
 "use client";
 import { useReducer, useState } from "react";
 import ProductCard from "./ProductCard";
+import Link from "next/link";
+
 export default function CardPanel() {
+  //Data
+  const mockHospital = [
+    { hid: "001", name: "Chulalongkorn Hospital", image: "/img/chula.jpg" },
+    { hid: "002", name: "Rajavithi Hospital", image: "/img/rajavithi.jpg" },
+    {
+      hid: "003",
+      name: "Thammasat University Hospital",
+      image: "/img/thammasat.jpg",
+    },
+  ];
+
   const ratingReducer = (
     ratingMap: Map<string, number>,
     action: { type: string; payload: { hospName: string; rating: number } }
@@ -44,36 +57,23 @@ export default function CardPanel() {
       <div className="text-center text-3xl font-semibold my-10">
         Hospital List
       </div>
-      <div className="container mx-auto my-10 flex flex-wrap justify-center space-x-20">
-        <ProductCard
-          hospName="Chulalongkorn Hospital"
-          hospLoc="Pathumwan, Bangkok"
-          hospTel="02-649-4000"
-          hospLink="https://chulalongkornhospital.go.th/kcmh/"
-          imgSrc="/img/chula.jpg"
-          review={rating.get("Chulalongkorn Hospital") || 0}
-          onReview={onSetRating}
-        />
-
-        <ProductCard
-          hospName="Rajavithi Hospital Hospital"
-          hospLoc="Ratchathewi, Bangkok"
-          hospTel="02-206-2900"
-          hospLink="https://www.rajavithi.go.th/"
-          imgSrc="/img/rajavithi.jpg"
-          review={rating.get("Rajavithi Hospital Hospital") || 0}
-          onReview={onSetRating}
-        />
-
-        <ProductCard
-          hospName="Thammasat University Hospital"
-          hospLoc="Khlongluang, Pathumthani"
-          hospTel="02-926-9999"
-          hospLink="https://www.hospital.tu.ac.th/"
-          imgSrc="/img/thammasat.jpg"
-          review={rating.get("Thammasat University Hospital") || 0}
-          onReview={onSetRating}
-        />
+      <div className="container mx-auto my-10 flex flex-wrap justify-center gap-8">
+        {mockHospital.map((hospital) => (
+          <Link
+            href={`/hospital/${hospital.hid}`}
+            className="w-full md:w-1/2 lg:w-1/4 px-4"
+          >
+            <ProductCard
+              hospName={hospital.name}
+              imgSrc={hospital.image}
+              review={
+                rating.has(hospital.name) ? rating.get(hospital.name)! : 0
+              }
+              onReview={onSetRating}
+              onRemove={onRemove}
+            />
+          </Link>
+        ))}
       </div>
 
       <div className="my-8">
