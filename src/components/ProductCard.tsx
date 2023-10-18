@@ -12,9 +12,9 @@ export default function ProductCard({
 }: {
   hospName: string;
   imgSrc: string;
-  review: number;
-  onReview: Function;
-  onRemove: Function;
+  review?: number;
+  onReview?: Function;
+  onRemove?: Function;
 }) {
   return (
     <InteractiveCard>
@@ -30,18 +30,22 @@ export default function ProductCard({
         <h4 className="text-xl font-semibold mb-2">{hospName}</h4>
       </div>
       <div className="w-full h-[10%] p-4">
-        <Rating
-          value={review}
-          onClick={(e) => e.stopPropagation()}
-          onChange={(e, newValue) => {
-            if (newValue === null) {
-              onRemove(hospName);
-            } else {
-              onReview(hospName, newValue);
-            }
-            e.preventDefault();
-          }}
-        />
+        {onReview && onRemove ? (
+          <Rating
+            value={review}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e, newValue) => {
+              if (newValue === null) {
+                onRemove(hospName);
+              } else {
+                onReview(hospName, newValue);
+              }
+              e.preventDefault();
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </InteractiveCard>
   );
