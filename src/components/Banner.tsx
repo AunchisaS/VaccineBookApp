@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Banner() {
   const covers = [
@@ -12,6 +13,7 @@ export default function Banner() {
   ];
   const [index, setIndex] = useState(0);
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <div
@@ -31,6 +33,11 @@ export default function Banner() {
         <h1 className="text-4xl font-semibold mb-3">Time To Vaccinate</h1>
         <h3 className="text-lg">Quick and Painless Protection</h3>
       </div>
+      {session ? (
+        <div className="z-30 absolute top-5 right-10 font-semibold text-white text-lg">
+          Welcome, {session.user?.name}
+        </div>
+      ) : null}
       <button
         className="bg-white text-blue-600 border boarder-indigo-600 font-semibold  shadow-l
             p-2 m-2 rounded z-20 absolute bottom-0 right-0
