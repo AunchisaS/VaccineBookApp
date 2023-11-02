@@ -3,8 +3,19 @@ import getHospital from "@/libs/getHospital";
 import getHospitals from "@/libs/getHospitals";
 import { LinearProgress } from "@mui/material";
 import { Suspense } from "react";
-export default function Hospital() {
+import getUserProfile from "@/libs/getUserProfile";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import AddHospitalForm from "@/components/AddHospitalForm";
+
+export default async function Hospital() {
   const hospitals = getHospitals();
+  let profile = null;
+  const session = await getServerSession(authOptions);
+  if (session && session.user.token) {
+    profile = await getUserProfile(session.user.token);
+  }
+
   return (
     <main className="">
       <h1 className="text-2xl font-semibold p-2 mb-4">Hospital Catalog</h1>
@@ -19,6 +30,7 @@ export default function Hospital() {
         >
           <HospitalCatalog hospitalJson={hospitals} />
         </Suspense>
+        {profile && profile.data.role == "admin" ? <AddHospitalForm /> : null}
       </div>
     </main>
   );
